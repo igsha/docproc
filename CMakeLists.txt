@@ -1,0 +1,24 @@
+cmake_minimum_required(VERSION 3.7)
+project(docproc VERSION 0.1.1 LANGUAGES NONE)
+
+set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/src)
+configure_file(${PROJECT_NAME}-config.cmake.in ${PROJECT_NAME}-config.cmake @ONLY)
+set(PROJECT_DIR "\${CMAKE_CURRENT_LIST_DIR}")
+configure_file(${PROJECT_NAME}-config.cmake.in install-${PROJECT_NAME}-config.cmake @ONLY)
+
+install(DIRECTORY src/ DESTINATION share/cmake/${PROJECT_NAME})
+install(FILES ${CMAKE_BINARY_DIR}/install-${PROJECT_NAME}-config.cmake
+    DESTINATION share/cmake/${PROJECT_NAME}
+    RENAME ${PROJECT_NAME}-config.cmake
+)
+export(PACKAGE ${PROJECT_NAME})
+
+add_subdirectory(tests)
+
+list(APPEND CPACK_GENERATOR TGZ)
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_SYSTEM_NAME ${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR})
+set(CPACK_PACKAGE_CONTACT "igsha")
+include(CPack)
