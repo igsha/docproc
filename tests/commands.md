@@ -2,7 +2,7 @@
 
 `docproc` uses pandoc json format to store object files.
 It has libraries and document.
-Moast of usefull commands are listed in @tbl:commands.
+Most of usefull commands are listed below.
 
 |Command|Description|
 |:------|:----------|
@@ -11,4 +11,4 @@ Moast of usefull commands are listed in @tbl:commands.
 |`target_compile_options`|The way to pass arguments to pandoc: variables, filters, etc.|
 |`target_link_libraries`|Link libraries to main document|
 
-:   List of useful commands {#tbl:commands}
+:   List of useful commands

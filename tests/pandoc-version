@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+VERSION=$(pandoc --version | sed -n 1p)
+sed "s;pandocver;$VERSION;g"
