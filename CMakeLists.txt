@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(docproc VERSION 0.2.1 LANGUAGES NONE)
+project(docproc VERSION 0.2.2 LANGUAGES NONE)
 
 include(CTest)
 include(CMakePackageConfigHelpers)
@@ -16,9 +16,9 @@ install(FILES
     ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
     DESTINATION share/cmake/${PROJECT_NAME}
 )
-export(PACKAGE ${PROJECT_NAME})
 
 if(BUILD_TESTING)
+    set(ENV{docproc_DIR} ${CMAKE_BINARY_DIR})
     add_subdirectory(tests)
 endif()
 
