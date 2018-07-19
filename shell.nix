@@ -1,5 +1,5 @@
 with import <nixpkgs> { };
-stdenv.mkDerivation rec {
+mkShell rec {
   name = "docproc";
   buildInputs = [ cmake pandoc dpkg ];
   shellHook = ''

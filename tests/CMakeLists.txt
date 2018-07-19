@@ -8,5 +8,5 @@ add_document(docx mydocx ../README.rst)
 target_link_libraries(mydocx mylib)
 
 add_document(html myhtml ../README.rst)
-target_link_libraries(myhtml mylib)
-set_target_properties(myhtml PROPERTIES LINK_FLAGS -Vpagetitle=myhtml)
+target_link_libraries(myhtml mylib "-V pagetitle=myhtml")
+#the same effect: set_target_properties(myhtml PROPERTIES LINK_FLAGS "-V pagetitle=myhtml")
