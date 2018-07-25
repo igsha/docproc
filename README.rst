@@ -100,16 +100,14 @@ In your ``CMakeLists.txt``::
 
     file(GLOB SRCS *.md)
     add_library(mylib ${SRCS})
-    target_compile_options(mylib PUBLIC -Fpandoc-crossref -Fpantable)
 
     add_document(html myhtml ../README.rst)
-    target_link_libraries(myhtml mylib)
-    set_target_properties(myhtml PROPERTIES LINK_FLAGS -Vpagetitle=myhtml)
+    target_link_libraries(myhtml mylib "-V pagetitle=myhtml" "-F pandoc-crossref" "-F pantable")
 
 ``find_package(docproc)`` calls ``enable_language(PANDOC)`` implicitly.
 After that ``add_document`` command is available.
 The first argument is the format, the second - target name, the others - markup files.
 You can "link" your document with built earlier "library" by ``add_library`` command.
-Additional ``pandoc`` flags can be passed by ``target_*`` and ``set_target_properties`` commands.
+Additional ``pandoc`` flags can be passed to ``target_*`` command.
 
 An example is available in ``tests/`` folder.
