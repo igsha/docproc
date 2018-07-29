@@ -1,3 +1,62 @@
 cmake_minimum_required(VERSION 3.0)
 list(APPEND CMAKE_MODULE_PATH @PROJECT_DIR@)
 enable_language(PANDOC)
+
+if(NOT @PROJECT_NAME@_FIND_COMPONENTS)
+    set(@PROJECT_NAME@_FIND_COMPONENTS plantuml convert dot) # all by default
+endif()
+
+foreach(comp ${@PROJECT_NAME@_FIND_COMPONENTS})
+    if(comp STREQUAL plantuml)
+        find_program(PLANTUML_EXE plantuml DOC "Plantuml executable")
+        if(PLANTUML_EXE-NOTFOUND)
+            message(SEND_ERROR "Could not find plantuml executable")
+        else()
+            message(STATUS "Found plantuml: ${PLANTUML_EXE}")
+        endif()
+    elseif(comp STREQUAL convert)
+        find_package(ImageMagick COMPONENTS convert REQUIRED)
+    elseif(comp STREQUAL dot)
+        find_program(DOT_EXE dot DOC "Graphviz dot executable")
+        if(DOT_EXE-NOTFOUND)
+            message(SEND_ERROR "Could not find dot executable")
+        else()
+            message(STATUS "Found dot: ${DOT_EXE}")
+        endif()
+    else()
+        message(SEND_ERROR "Unknown component")
+    endif()
+endforeach()
+
+include(CMakeParseArguments)
+
+function(convert_image_for)
+    cmake_parse_arguments(CONVERT_IMAGE "" "TARGET;FORMAT" "FILES" ${ARGN})
+    if(NOT CONVERT_IMAGE_FORMAT)
+        set(CONVERT_IMAGE_FORMAT png)
+    endif()
+
+    foreach(_file ${CONVERT_IMAGE_FILES})
+        get_filename_component(SRC ${_file} ABSOLUTE)
+        get_filename_component(SRC_NAME ${SRC} NAME_WE)
+        get_filename_component(SRC_EXT ${SRC} EXT)
+        set(OUT ${SRC_NAME}.${CONVERT_IMAGE_FORMAT})
+
+        if(SRC_EXT MATCHES uml)
+            set(CMDS ${PLANTUML_EXE} ${SRC} -T${CONVERT_IMAGE_FORMAT} -o ${CMAKE_CURRENT_BINARY_DIR})
+        elseif(SRC_EXT MATCHES dot)
+            set(CMDS ${DOT_EXE} ${SRC} -T${CONVERT_IMAGE_FORMAT} -o ${OUT})
+        else()
+            set(CMDS ${ImageMagick_convert_EXECUTABLE} ${SRC} -t${CONVERT_IMAGE_FORMAT} -o ${OUT})
+        endif()
+
+        add_custom_command(OUTPUT ${OUT}
+            COMMAND ${CMDS}
+            DEPENDS ${SRC}
+        )
+        list(APPEND OUT_FILES ${OUT})
+    endforeach()
+
+    add_custom_target(${CONVERT_IMAGE_TARGET}_images DEPENDS ${OUT_FILES})
+    add_dependencies(${CONVERT_IMAGE_TARGET} ${CONVERT_IMAGE_TARGET}_images)
+endfunction()

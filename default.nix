@@ -21,7 +21,7 @@ in pkgs.stdenv.mkDerivation rec {
     addEnvHooks "$targetOffset" setDocprocDir
   '';
 
-  nativeBuildInputs = with pkgs; [ cmake setupHook pandoc ];
+  nativeBuildInputs = with pkgs; [ cmake setupHook pandoc plantuml graphviz imagemagick7 ];
 
   meta = with pkgs.stdenv.lib; {
     description = "A cmake-package for document processing based on pandoc";

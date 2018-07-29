@@ -13,3 +13,11 @@ macro(add_document _format _target)
     add_executable(${_target} ${ARGN})
     set_target_properties(${_target} PROPERTIES SUFFIX ".${_format}")
 endmacro()
+
+macro(add_html)
+    add_document(html ${ARGN})
+endmacro()
+
+macro(add_docx)
+    add_document(docx ${ARGN})
+endmacro()
