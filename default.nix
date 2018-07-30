@@ -22,6 +22,7 @@ in pkgs.stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = with pkgs; [ cmake setupHook pandoc plantuml graphviz imagemagick7 ];
+  doCheck = true;
 
   meta = with pkgs.stdenv.lib; {
     description = "A cmake-package for document processing based on pandoc";

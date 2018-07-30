@@ -1,4 +1,4 @@
-find_package(docproc REQUIRED)
+find_package(docproc COMPONENTS plantuml REQUIRED)
 
 file(GLOB SRCS *.md)
 add_library(mylib ${SRCS})

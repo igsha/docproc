@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(docproc VERSION 0.2.2 LANGUAGES NONE)
+project(docproc VERSION 0.2.3 LANGUAGES NONE)
 
 include(CTest)
 include(CMakePackageConfigHelpers)
