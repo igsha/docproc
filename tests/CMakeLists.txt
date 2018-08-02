@@ -19,7 +19,7 @@ add_test(NAME metadata COMMAND ${CMAKE_COMMAND}
 )
 
 add_html(plantuml_test plantuml.rst)
-convert_image_for(TARGET plantuml_test FILES diagram.uml FORMAT svg)
+convert_image_for(TARGET plantuml_test FILES diagram.uml FORMAT svg OPTIONS PLANTUML "-SdefaultFontSize=20")
 target_link_libraries(plantuml_test PUBLIC "-V pagetitle='plantuml test'" --self-contained)
 add_test(NAME plantuml COMMAND ${CMAKE_COMMAND}
     -DFILENAME=$<TARGET_FILE:plantuml_test> "-DREGEXSTR=img src=\\\"data:image/svg\\+xml\\;base64" -DSILENT=ON
