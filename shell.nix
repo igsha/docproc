@@ -1,7 +1,10 @@
 with import <nixpkgs> { };
-mkShell rec {
+let
+  docproc = callPackage ./. { };
+
+in mkShell rec {
   name = "docproc";
-  buildInputs = [ cmake pandoc dpkg plantuml graphviz imagemagick7 ];
+  buildInputs = docproc.nativeBuildInputs;
   shellHook = ''
     echo Welcome to ${name} environment
   '';
