@@ -1,0 +1,10 @@
+digraph D {
+    node[shape=record];
+    a[label="Some text"];
+    b[label="Class"];
+    c[label="Derivation"];
+
+    a -> {b c};
+
+    d[label="New class"];
+}

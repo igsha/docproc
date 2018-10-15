@@ -1,0 +1,8 @@
+if(NOT CMAKE_IMAGE_COMPILER)
+    set(CMAKE_IMAGE_COMPILER ${CMAKE_COMMAND})
+    string(REPLACE ";" " " _args "${CMAKE_IMAGE_COMPILER_ARGS}")
+    set(CMAKE_IMAGE_COMPILER_ARG1 "${_args} -P ${CMAKE_CURRENT_LIST_DIR}/compiler.cmake")
+endif()
+
+set(CMAKE_IMAGE_COMPILER_ENV_VAR "${CMAKE_COMMAND}")
+configure_file(${CMAKE_CURRENT_LIST_DIR}/CMakeIMAGECompiler.cmake.in ${CMAKE_PLATFORM_INFO_DIR}/CMakeIMAGECompiler.cmake @ONLY)
