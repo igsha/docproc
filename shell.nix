@@ -4,7 +4,7 @@ let
 
 in mkShell rec {
   name = "docproc";
-  buildInputs = docproc.nativeBuildInputs;
+  buildInputs = docproc.nativeBuildInputs ++ [ dpkg ];
   shellHook = ''
     echo Welcome to ${name} environment
   '';
