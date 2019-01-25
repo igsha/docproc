@@ -6,26 +6,10 @@ About project
 Installation
 ============
 
-Ubuntu way::
+Ubuntu way (replace ``<version>`` with the latest version)::
 
-    ubuntu@ubuntu:~$ wget -q https://github.com/igsha/docproc/releases/download/v0.2.1/docproc-0.2.1-all.deb -P /tmp/
-    ubuntu@ubuntu:~$ sudo apt install /tmp/docproc-0.2.1-all.deb
-    Reading package lists... Done
-    Building dependency tree
-    Reading state information... Done
-    Note, selecting 'docproc' instead of '/tmp/docproc-0.2.1-all.deb'
-    The following NEW packages will be installed:
-      docproc
-    0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-    Need to get 0 B/1,554 B of archives.
-    After this operation, 18.4 kB of additional disk space will be used.
-    Get:1 /tmp/docproc-0.1.1-all.deb docproc amd64 0.2.1 [1,540 B]
-    Selecting previously unselected package docproc.
-    (Reading database ... 108862 files and directories currently installed.)
-    Preparing to unpack .../docproc-0.1.1-all.deb ...
-    Unpacking docproc (0.2.1) ...
-    Setting up docproc (0.2.1) ...
-    ubuntu@ubuntu:~$
+    ubuntu@ubuntu:~$ wget -q https://github.com/igsha/docproc/releases/download/v<verson>/docproc-<version>-all.deb -P /tmp/
+    ubuntu@ubuntu:~$ sudo apt install /tmp/docproc-<version>-all.deb
 
 There are two approach for NixOS way:
 
@@ -62,30 +46,18 @@ On NixOS (you can skip the first step if your OS is different):
     igor@nixos-pc build (master) [nix-shell] % make package
     Scanning dependencies of target mylib
     [ 14%] Building PANDOC object tests/CMakeFiles/mylib.dir/about.md.json
-    [ 28%] Building PANDOC object tests/CMakeFiles/mylib.dir/commands.md.json
-    [ 42%] Linking PANDOC static library libmylib.json
-    [ 42%] Built target mylib
-    Scanning dependencies of target mydocx
-    [ 57%] Building PANDOC object tests/CMakeFiles/mydocx.dir/__/README.rst.json
-    [ 71%] Linking PANDOC executable mydocx.docx
-    [ 71%] Built target mydocx
-    Scanning dependencies of target myhtml
-    [ 85%] Building PANDOC object tests/CMakeFiles/myhtml.dir/__/README.rst.json
+    ...
     [100%] Linking PANDOC executable myhtml.html
     [100%] Built target myhtml
     Run CPack packaging tool...
     CPack: Create package using DEB
-    CPack: Install projects
-    CPack: - Run preinstall target for: docproc
-    CPack: - Install project: docproc
+    ...
     CPack: Create package
-    CPack: - package: /home/igor/docproc/build/docproc-0.2.1-all.deb generated.
+    CPack: - package: /home/igor/docproc/build/docproc-<version>-all.deb generated.
     CPack: Create package using TGZ
-    CPack: Install projects
-    CPack: - Run preinstall target for: docproc
-    CPack: - Install project: docproc
+    ...
     CPack: Create package
-    CPack: - package: /home/igor/docproc/build/docproc-0.2.1-all.tar.gz generated.
+    CPack: - package: /home/igor/docproc/build/docproc-<version>-all.tar.gz generated.
     igor@nixos-pc build (master) [nix-shell] %
 
 ``tar.gz`` release package is used by ``default.nix`` with attribute ``release``.
