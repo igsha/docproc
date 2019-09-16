@@ -1,0 +1,42 @@
+# vim: ts=2 sw=2
+
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: cachix/install-nix-action@v6
+    - name: Build target
+      run: |
+        cmake -B build -DCPACK_GENERATOR=DEB
+        cmake --build build -j -- package
+        cmake --build build -- test
+      shell: env nix-shell -I nixpkgs=channel:nixos-19.03 --run "bash {0}"
+    - name: Create bundle
+      id: info
+      run: |
+        TAGNAME=$(basename ${{ github.ref }})
+        git tag -l --format='%(body)' $TAGNAME > build/body.txt
+        echo ::set-output name=title::$(git tag -l --format='%(subject)' $TAGNAME)
+    - uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: "build/docproc-*-all.*"
+        body_path: build/body.txt
+        name: ${{ steps.info.outputs.title }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
