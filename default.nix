@@ -1,4 +1,4 @@
-{ stdenv, writeText, cmake, pandoc, plantuml, graphviz, imagemagick7, makeWrapper, bash }:
+{ stdenv, lib, writeText, cmake, pandoc, plantuml, graphviz, imagemagick7, makeWrapper, bash }:
 
 let
   cmakeVersionRegex = ".*project\\(.*VERSION[[:space:]]+([[:digit:]\\.]+).*";
@@ -28,7 +28,7 @@ in stdenv.mkDerivation rec {
     substituteInPlace tests/pandoc-version --replace "/usr/bin/env bash" ${bash}/bin/bash
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A cmake-package for document processing based on pandoc";
     homepage = https://github.com/igsha/docproc;
     license = licenses.mit;
